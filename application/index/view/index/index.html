@@ -1,0 +1,72 @@
+<html>
+
+    <head>
+        <title>计费管理</title>
+    </head>
+
+    <h3> 添加卡 </h3>
+
+    <form action="{:url("index/index/add")}" method="post">
+        <input type="text" name="card" placeholder="卡号">
+        <input type="password" name="password" placeholder="密码">
+        <input type="submit" value="新增">
+    </form>
+
+    <h3> 查询卡 </h3>
+    <form action="{:url("index/index/query")}" method="get">
+        <input type="text" name="card" placeholder="卡号">
+        <input type="submit" value="查询">
+    </form>
+
+    <h3> 上机 </h3>
+    <form action="{:url("index/index/up")}" method="post">
+        <input type="text" name="card" placeholder="卡号">
+        <input type="password" name="password" placeholder="密码">
+        <input type="submit" value="确定">
+    </form>
+
+    <h3> 下机 </h3>
+    <form action="{:url("index/index/down")}" method="post">
+        <input type="text" name="card" placeholder="卡号">
+        <input type="password" name="password" placeholder="密码">
+        <input type="submit" value="确定">
+    </form>
+
+    <h3> 充值 </h3>
+    <form action="{:url("index/index/recharge")}" method="post">
+        <input type="text" name="card" placeholder="卡号">
+        <input type="text" name="amount" placeholder="金额">
+        <input type="submit" value="确定">
+    </form>
+
+    <h3> 退费 </h3>
+    <form action="{:url("index/index/refund")}" method="post">
+        <input type="text" name="card" placeholder="卡号">
+        <input type="password" name="password" placeholder="密码">
+        <input type="text" name="amount" placeholder="金额">
+        <input type="submit" value="确定">
+    </form>
+
+    <h3> 查询统计 </h3>
+    <form action="{:url("index/index/statistic")}" method="post">
+
+        请填写用户 上机时间 的时间段：（可以只有开始时间/结束时间<br>
+        填写示例 20190221 12:21:21 ， 20190221 , 20190221 12:21 <br>
+        <input type="text" name="start_time" placeholder="开始时间">
+        <input type="text" name="end_time" placeholder="结束时间"><br>
+        卡号(可选)：<br>
+        <input type="text" name="card" placeholder="卡号">
+        <input type="submit" value="搜索">
+    </form>
+
+    <h3> 注销卡 </h3>
+    <form action="{:url("index/index/cancel")}" method="post">
+        <input type="text" name="card" placeholder="卡号">
+        <input type="password" name="password" placeholder="密码">
+        <input type="submit" value="确定">
+    </form>
+
+
+
+
+</html>

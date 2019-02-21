@@ -1,0 +1,30 @@
+<html>
+    <head><title>查询卡</title></head>
+    <table>
+    <tr>
+        <th > 卡号</th>
+        <th>状态</th>
+        <th>余额</th>
+        <th>累计使用</th>
+        <th>使用次数</th>
+        <th>上次使用时间</th>
+    </tr>
+    <br>
+    {foreach $cards as $card}
+    <tr>
+    <td >{$card.card}</td> 
+    <td>{$card.status} </td>
+    <td>{$card.balance} </td>
+    <td>{$card.total_used} </td>
+    <td>{$card.times} </td>
+    <td>
+    {if $card.update_time}
+        {$card.update_time}
+    {else /}
+        无
+        {/if}
+    </td>
+        </tr>
+        {/foreach}
+        </table>
+</html>

@@ -1,15 +1,88 @@
 <?php
 namespace app\index\controller;
 
-class Index
-{
-    public function index()
-    {
-        return '<style type="text/css">*{ padding: 0; margin: 0; } div{ padding: 4px 48px;} a{color:#2E5CD5;cursor: pointer;text-decoration: none} a:hover{text-decoration:underline; } body{ background: #fff; font-family: "Century Gothic","Microsoft yahei"; color: #333;font-size:18px;} h1{ font-size: 100px; font-weight: normal; margin-bottom: 12px; } p{ line-height: 1.6em; font-size: 42px }</style><div style="padding: 24px 48px;"> <h1>:) </h1><p> ThinkPHP V5.1<br/><span style="font-size:30px">12载初心不改（2006-2018） - 你值得信赖的PHP框架</span></p></div><script type="text/javascript" src="https://tajs.qq.com/stats?sId=64890268" charset="UTF-8"></script><script type="text/javascript" src="https://e.topthink.com/Public/static/client.js"></script><think id="eab4b9f840753f8e7"></think>';
+use think\Controller;
+class Index  extends Controller {
+    public function index() {
+       return $this->fetch(); 
     }
 
-    public function hello($name = 'ThinkPHP5')
-    {
-        return 'hello,' . $name;
+    public function add() {
+        $data = input('post.');
+
+        $newCard = [];
+        $newCard['card'] = $data['card'];
+        $newCard['password'] = $data['password'];
+
+        model("Card")->save($newCard);
+
+        return $this->success('新增成功', 'index/index/index');
+    }
+
+    public function query() {
+        $card = input('get.card');
+
+        $cards = model('Card')->where("card", "like", "%".$card."%")->select();
+        
+        if ($card) {
+            $this->assign('cards', $cards);
+            return $this->fetch();
+        } else {
+            return $this->error("不存在的卡号");
+        }
+    }
+
+    public function up() {
+        $newUp = [];
+
+        $card = input('post.card');
+
+        $the_user = model('Card')->get(['card' => $card, 'password' => input('post.password')]);
+
+        $status = 1;
+        if ( $the_user ) {
+            if ($the_user->status == -1) {
+                return $this->error('用户已注销');
+            } else {
+                if (model('CardOnline')->get(['card' => $card])) {
+                    return $this->error('用户已上机');
+                }
+            }
+        } else {
+            return $this->error('用户名不存在或密码错误');
+        }
+
+        $newUp['card'] = $card;    
+        $newUp['start_time']  = strtotime('now');
+
+        model('CardOnline')->save($newUp);
+
+        return $this->success('上机成功');
+    }
+
+    public function down() {
+        $the_user = model('Card')->get(['card' => input('post.card'), 'password' => input('post.password')]);
+
+        if (! $the_user) {
+            return $this->error('用户名或密码错误');
+        }
+
+        $the_user_online = model('CardOnline')->get(['card' => input('post.card')]);
+
+        if (! $the_user_online) {
+            return $this->error('用户为上机');
+        }
+
+        $end_time = strtotime('now');
+        $the_user_online->end_time = $end_time;
+
+        $total_time = $end_time - $the_user_online->start_time;
+        $total_time = $total_time  / (60 * 60);
+
+        $money_use = 5 * $total_time;
+        $the_user_online->money_use = $money_use; 
+
+        $the_user_online->save();
+
     }
 }
