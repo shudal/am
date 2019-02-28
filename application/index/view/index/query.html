@@ -14,7 +14,10 @@
     <tr>
     <td >{$card.card}</td> 
     <td>{$card.status} </td>
+
+    {if $card.balance}
     <td>{$card.balance} </td>
+    {/if}
     <td>{$card.total_used} </td>
     <td>{$card.times} </td>
     <td>

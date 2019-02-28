@@ -43,12 +43,11 @@
     <form action="{:url("index/index/refund")}" method="post">
         <input type="text" name="card" placeholder="卡号">
         <input type="password" name="password" placeholder="密码">
-        <input type="text" name="amount" placeholder="金额">
         <input type="submit" value="确定">
     </form>
 
     <h3> 查询统计 </h3>
-    <form action="{:url("index/index/statistic")}" method="post">
+    <form action="{:url("index/index/bill")}" method="get">
 
         请填写用户 上机时间 的时间段：（可以只有开始时间/结束时间<br>
         填写示例 20190221 12:21:21 ， 20190221 , 20190221 12:21 <br>

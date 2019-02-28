@@ -1,0 +1,21 @@
+</html>
+<table>
+
+    <tr>
+        <th>卡号</th>
+        <th>消费</th>
+        <th>上机时间</th>
+        <th>下机时间</th>
+        </tr>
+        {foreach $cards as $uo}
+        <tr>
+            <td> {$uo.card}</td>
+            <td>{$uo.money_used}元</td>
+            <td>{$uo.start_time}</td>
+            <td>{$uo.end_time}</td>
+        </tr>
+
+        {/foreach}
+    </table>
+
+</html>
